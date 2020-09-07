@@ -59,7 +59,6 @@ public class ServiceBrokerAdmin implements UserDetails {
         return true;
     }
 
-    @Override
     public String getName() {
         return this.username;
     }

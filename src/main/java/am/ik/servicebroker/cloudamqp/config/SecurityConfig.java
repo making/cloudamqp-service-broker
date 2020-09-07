@@ -1,11 +1,9 @@
 package am.ik.servicebroker.cloudamqp.config;
 
-//import org.springframework.boot.actuate.autoconfigure.security.EndpointRequest;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.web.server.HttpSecurity;
-import org.springframework.security.core.userdetails.MapUserDetailsRepository;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.core.userdetails.MapReactiveUserDetailsService;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
 @Configuration
@@ -17,19 +15,17 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityWebFilterChain springWebFilterChain(HttpSecurity http) throws Exception {
+    public SecurityWebFilterChain springWebFilterChain(ServerHttpSecurity http) throws Exception {
         return http
-                .authorizeExchange()
+				.authorizeExchange()
                 .pathMatchers("/v2/**").hasRole("ADMIN") //
-                .pathMatchers("/application/**").hasRole("ADMIN") //
-                .and()
-                .httpBasic()
-                .and()
-                .build();
+                .pathMatchers("/application/**").hasRole("ADMIN")
+				.and()
+				.build();
     }
 
     @Bean
-    public MapUserDetailsRepository userDetailsRepository() {
-        return new MapUserDetailsRepository(this.admin);
+    public MapReactiveUserDetailsService userDetailsRepository() {
+        return new MapReactiveUserDetailsService(this.admin);
     }
 }
