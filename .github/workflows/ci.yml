@@ -52,8 +52,7 @@ jobs:
       run: |
         set -e
         cf login -a ${CF_API} -u ${CF_USERNAME} -p ${CF_PASSWORD} -o ${CF_ORG} -s ${CF_SPACE}
-        rm -f manifest.yml
         cf create-app cloudamqp-service-broker
         cf set-env cloudamqp-service-broker BPL_JVM_THREAD_COUNT 20
         cf set-env cloudamqp-service-broker JAVA_TOOL_OPTIONS "-XX:ReservedCodeCacheSize=32M -Xss512k -Duser.timezone=Asia/Tokyo -Dspring.security.user.password=${SERVICE_BROKER_CLOUDAMQP_APIKEY} -Dservice-broker.cloudamqp.api-key=${SERVICE_BROKER_CLOUDAMQP_APIKEY}"
-        cf push cloudamqp-service-broker -m 256m --strategy rolling -o ${IMAGE_NAME}
+        cf push cloudamqp-service-broker -m 256m --strategy rolling -o ${IMAGE_NAME} --no-manifest
