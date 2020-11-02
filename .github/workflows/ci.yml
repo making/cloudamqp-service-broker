@@ -33,7 +33,7 @@ jobs:
         docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}        
         docker pull ${IMAGE_NAME}
         set -e
-        ./mvnw -V spring-boot:image -DskipTests=true -Dspring-boot.version=${BOOT_VERSION} -Dspring-boot.build-image.imageName=${IMAGE_NAME}
+        ./mvnw -V spring-boot:build-image -DskipTests=true -Dspring-boot.version=${BOOT_VERSION} -Dspring-boot.build-image.imageName=${IMAGE_NAME}
         docker push ${IMAGE_NAME}
     # - uses: jvalkeal/setup-cf-cli@v0
     #   if: github.ref == 'refs/heads/master'
