@@ -27,8 +27,8 @@ jobs:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
       run: |
-        set -e
-        BOOT_VERSION=$(grep '<version>' pom.xml | head -n 1 | sed -e 's|<version>||g' -e 's|</version>||g' -e 's|<.*>||g' -e 's| ||g')
+        set -ex
+        BOOT_VERSION=$(grep '<version>' pom.xml | head -n 2 | tail -1 | sed -e 's|<version>||g' -e 's|</version>||g' -e 's|<.*>||g' -e 's|[      ]*||g')
         set +e
         docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}        
         docker pull ${IMAGE_NAME}
