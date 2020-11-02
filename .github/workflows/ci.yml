@@ -30,7 +30,7 @@ jobs:
         set -ex
         BOOT_VERSION=$(grep '<version>' pom.xml | head -n 2 | tail -1 | sed -e 's|<version>||g' -e 's|</version>||g' -e 's|<.*>||g' -e 's|[ 	]*||g')
         set +e
-        docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}        
+        docker login ${IMAGE_NAME} -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}        
         docker pull ${IMAGE_NAME}
         set -e
         ./mvnw -V spring-boot:build-image -DskipTests=true -Dspring-boot.version=${BOOT_VERSION} -Dspring-boot.build-image.imageName=${IMAGE_NAME}
